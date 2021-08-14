@@ -1,0 +1,211 @@
+:root {
+    --bg-color: hsl(49 37% 94%);
+    --blinkDelay: 1s;
+    --typewriterh1Character: 30;
+    --typewriterh2Character: 43;
+    --typewriterh1Speed:  calc(.2s * var(--typewriterh1Character));
+    --typewriterh2Speed:  calc(.1s * var(--typewriterh2Character));
+    /* --typewriterh1Speed: 0s;
+    --typewriterh2Speed: 0s;  */
+}
+
+* {
+    box-sizing: border-box;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header, .footer {
+    background-color: #3b3b3b;
+    display: flex;
+    padding: 10px 0;
+    width: 100%;
+}
+.inner_header, .inner_footer {
+    height: 100%;
+    margin: 0 auto;
+    width: 90vw;
+}
+.logo_container {
+    height: 100%;
+    float: left;
+}
+.logo_container h1 {
+    color: white;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 32px;
+    font-weight: 200;
+    padding: .35em .1em;
+}
+.logo_container h1 span{
+    font-weight: 800;
+}
+
+.navigation {
+    display: flexbox;
+    float: right;
+    height: 200%;
+}
+.navigation li {
+    border-spacing: 1.5em 1.3em;
+    display: table;
+    float: left;
+    height: 100%;
+    width: 9em;
+}
+.navigation li a {
+    color: white;
+    display: table-cell;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 16px;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+.navigation a:last-child {
+    padding-right: 0;
+}
+
+.intro {
+    background: var(--bg-color);
+    display: grid;
+    min-height: 40vh;
+    overflow: hidden;
+    place-content: center;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+}
+.intro h1,.intro h2 {
+    font-family: "Source Sans Pro", monospace;
+    font-weight: normal;
+    margin: 20px 0;
+    position: relative;
+    width: max-content;
+}
+.intro h1 {font-size: clamp(1rem, 3vw + 1rem, 4rem);}
+.intro h2 {font-size: clamp(1rem, 1vw + 1rem, 4rem);}
+
+.intro h1::before, .intro h1::after,
+.intro h2::before, .intro h2::after {
+    bottom: 0;  
+    content: '';
+    left: 0;
+    position: absolute;
+    padding:0;
+    right: 0;
+    top: 0;
+}
+
+.intro h1::before {
+    animation: 
+        typewriterh1
+            var(--typewriterh1Speed) 
+            steps(calc(var(--typewriterh1Character) - 1))
+            var(--blinkDelay) 
+            forwards;
+    background: var(--bg-color);
+}
+.intro h1::after {
+    animation: 
+        typewriterh1
+            var(--typewriterh1Speed) 
+            steps(calc(var(--typewriterh1Character) - 1)) 
+            var(--blinkDelay) 
+            forwards,
+        blink 750ms steps(var(--typewriterh1Character)) infinite;
+        background: black;
+        width: .1em;
+}
+
+.intro h2::before {
+    animation: 
+        typewriterh2 
+            var(--typewriterh2Speed) 
+            steps(calc(var(--typewriterh2Character) - 1)) 
+            calc(var(--typewriterh1Speed) + var(--blinkDelay)) 
+            forwards;
+    background: var(--bg-color);
+}
+.intro h2::after {
+    animation:
+        typewriterh2
+            var(--typewriterh2Speed)
+            steps(calc(var(--typewriterh2Character) - 1))
+            calc(var(--typewriterh1Speed) + var(--blinkDelay))
+            forwards,
+        blink 750ms steps(var(--typewriterh2Character)) infinite;
+    background: black;
+    width: .1em;
+}
+
+.subtitle {
+    animation: 
+        fadeInUp
+            2s 
+            ease 
+            calc(var(--typewriterh1Speed) + var(--typewriterh2Speed) + var(--blinkDelay)) 
+            forwards;
+    color: hsl(0 0% 0% / 0.7);
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: clamp(1rem, 1vw + 1rem, 4rem);
+    margin: 20px 0;
+    opacity: 0;
+    transform: translateY(3vw);
+}
+
+.foot {
+    display: flexbox;
+    width: 100%;
+    float: middle;
+}
+.foot li{
+    height: 100%;
+    width: calc(100% / 3);
+    display: table;
+    float: left;
+    border-spacing: 1.5em 1.3em;
+}
+.foot li a {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    height: 100%;
+    color: white;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 12px;
+}
+
+@keyframes typewriterh1 {
+    to {
+        left:calc(100% * (var(--typewriterh1Character) - 1) / var(--typewriterh1Character));
+    }
+}
+@keyframes typewriterh2 {
+    to {
+        left:calc(100% * (var(--typewriterh2Character) - 1) / var(--typewriterh2Character));
+    }
+}
+@keyframes blink {
+    to {
+        background: transparent;
+    }
+}
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
